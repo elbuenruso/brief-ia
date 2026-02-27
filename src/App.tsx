@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"; // Nota: En tu PC usa "framer-motion" en lugar de "motion/react"
+import { motion } from "motion/react"; // Nota: En tu PC usa "framer-motion" en lugar de "motion/react"
 import { 
   Cpu, 
   Database, 
