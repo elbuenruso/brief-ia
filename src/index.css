@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-[#1e293b] bg-white;
+  }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  section, footer, header { page-break-inside: avoid; }
+  body { background: white !important; color: black !important; }
+  .bg-brand-dark { background-color: #1e293b !important; -webkit-print-color-adjust: exact; }
+  .bg-brand-blue { background-color: #1a4da1 !important; -webkit-print-color-adjust: exact; }
+  .text-white { color: white !important; }
+}
