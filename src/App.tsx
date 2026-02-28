@@ -1,4 +1,3 @@
-import React from 'react';
 import React, { useState } from 'react';
 import { motion } from "motion/react";
 import { 
@@ -15,9 +14,9 @@ import {
   Search,
   MapPin,
   Mail,
+  Download,
   Copy,
   Check
-  Download
 } from "lucide-react";
 
 const SectionHeader = ({ number, title }: { number: string; title: string }) => (
@@ -113,15 +112,15 @@ const CaseStudy = ({
   </motion.section>
 );
 
-const [copied, setCopied] = useState(false);
-
-const copyEmail = () => {
-  navigator.clipboard.writeText("rususrc@gmail.com");
-  setCopied(true);
-  setTimeout(() => setCopied(false), 2000);
-};
-
 export default function App() {
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText("rususrc@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="min-h-screen bg-white selection:bg-brand-blue selection:text-white">
       {/* Hero Section */}
@@ -153,21 +152,39 @@ export default function App() {
               Arquitectura, Orquestación y Motores de Decisión para la automatización operativa real.
             </p>
             
-            <div className="flex flex-col md:flex-row gap-4">
-              <a 
-                href="mailto:rususrc@gmail.com" 
-                className="flex items-center gap-2 px-6 py-3 bg-brand-dark text-white rounded-xl font-bold hover:bg-brand-blue transition-colors"
-              >
-                <Mail size={18} /> Enviar Correo
-              </a>
+            <div className="flex flex-wrap gap-4 pt-8 border-t border-white/10 items-center justify-between w-full">
+              <div className="flex flex-wrap gap-8">
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Arquitecto</p>
+                  <p className="font-bold">Uriel Ríos Cervantes</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Especialidad</p>
+                  <p className="font-bold">Sistemas Autónomos</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Ubicación</p>
+                  <p className="font-bold flex items-center gap-1">
+                    <MapPin size={14} /> CDMX | México
+                  </p>
+                </div>
+              </div>
               
-              <button 
-                onClick={copyEmail}
-                className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-brand-dark rounded-xl font-bold hover:bg-gray-200 transition-colors border border-gray-200"
-              >
-                {copied ? <Check size={18} className="text-green-600" /> : <Copy size={18} />}
-                {copied ? "¡Copiado!" : "Copiar Email"}
-              </button>
+              <div className="no-print flex flex-wrap gap-3">
+                <button 
+                  onClick={() => window.print()}
+                  className="flex items-center gap-2 px-6 py-3 bg-brand-blue text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-brand-blue/20"
+                >
+                  <Download size={18} /> Exportar PDF
+                </button>
+                <button 
+                  onClick={copyEmail}
+                  className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md text-white rounded-xl font-bold hover:bg-white/20 transition-all border border-white/20"
+                >
+                  {copied ? <Check size={18} className="text-green-400" /> : <Copy size={18} />}
+                  {copied ? "¡Copiado!" : "Copiar Email"}
+                </button>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -378,10 +395,21 @@ export default function App() {
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1">Contacto</p>
               <p className="text-lg font-bold">Uriel Ríos Cervantes</p>
             </div>
-            <div className="flex gap-4">
-              <a href="mailto:rususrc@gmail.com" className="flex items-center gap-2 px-6 py-3 bg-brand-dark text-white rounded-xl font-bold hover:bg-brand-blue transition-colors">
-                <Mail size={18} /> Contactar
+            <div className="flex flex-col md:flex-row gap-4">
+              <a 
+                href="mailto:rususrc@gmail.com" 
+                className="flex items-center gap-2 px-6 py-3 bg-brand-dark text-white rounded-xl font-bold hover:bg-brand-blue transition-colors"
+              >
+                <Mail size={18} /> Enviar Correo
               </a>
+              
+              <button 
+                onClick={copyEmail}
+                className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-brand-dark rounded-xl font-bold hover:bg-gray-200 transition-colors border border-gray-200"
+              >
+                {copied ? <Check size={18} className="text-green-600" /> : <Copy size={18} />}
+                {copied ? "¡Copiado!" : "Copiar Email"}
+              </button>
             </div>
           </div>
         </div>
