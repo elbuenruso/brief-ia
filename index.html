@@ -1,12 +1,1116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Systems Brief - Uriel Ríos</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief IA — Uriel Ríos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --surface: #101010;
+  --card: #161616;
+  --border: #1e1e1e;
+  --border2: #2a2a2a;
+  --accent: #c8f04d;
+  --accent2: #f0c84d;
+  --accent3: #4df0c8;
+  --accent4: #f04d7a;
+  --text: #ede9e0;
+  --muted: #5c5850;
+  --muted2: #8a8278;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+.serif { font-family: 'Playfair Display', serif; }
+.mono  { font-family: 'DM Mono', monospace; }
+.lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--muted);
+}
+.lbl-g { color: var(--accent); }
+.lbl-y { color: var(--accent2); }
+.lbl-t { color: var(--accent3); }
+.lbl-p { color: var(--accent4); }
+
+/* ─── LAYOUT ─── */
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 64px; }
+@media(max-width:800px){ .wrap { padding: 0 24px; } }
+
+/* ─── HERO ─── */
+.hero { border-bottom: 1px solid var(--border); }
+.hero-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 26px 64px; border-bottom: 1px solid var(--border);
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.hero-l {
+  padding: 80px 64px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 48px;
+}
+.hero-r {
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 36px;
+  position: relative; overflow: hidden;
+}
+.hero-r::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(200,240,77,0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse 70% 70% at 65% 30%, black 20%, transparent 80%);
+  pointer-events: none;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 6vw, 92px);
+  font-weight: 900; line-height: .92; letter-spacing: -.025em;
+}
+.hero-title em { font-style: italic; color: var(--accent); }
+.tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-style: italic; line-height: 1.55;
+  border-left: 2px solid var(--accent); padding-left: 22px;
+  position: relative; z-index: 1;
+}
+.stats-row {
+  display: flex; gap: 48px;
+  padding: 28px 64px; border-top: 1px solid var(--border);
+  flex-wrap: wrap; align-items: center;
+}
+.stat strong {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 38px; font-weight: 900; line-height: 1;
+}
+.stat span { font-size: 10px; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+
+/* ─── SECTIONS ─── */
+.sec { padding: 90px 64px; border-bottom: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
+.sec-head { display: flex; gap: 18px; align-items: baseline; margin-bottom: 52px; }
+.sec-n { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: .2em; }
+.sec-t { font-family: 'Playfair Display', serif; font-size: clamp(28px,3.5vw,50px); font-weight: 700; line-height: 1; }
+
+.band { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 64px; }
+
+/* ─── PROBLEM CARDS ─── */
+.prob-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin-top: 48px; }
+.prob-card { background: var(--surface); padding: 40px 34px; position: relative; overflow: hidden; }
+.prob-card::after { content: attr(data-n); font-family:'Playfair Display',serif; font-size:80px; font-weight:900; color:rgba(255,255,255,.025); position:absolute; bottom:-14px; right:8px; line-height:1; pointer-events:none; }
+.prob-card h3 { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent2); margin-bottom:12px; }
+.prob-card p { font-size:14px; color:var(--muted2); line-height:1.85; }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA 1: CICLO DE AUTONOMÍA (hero)
+───────────────────────────────────────── */
+.cycle-diagram {
+  display: flex; align-items: center; gap: 0;
+  background: var(--card); border: 1px solid var(--border2);
+  padding: 24px 20px; position: relative; z-index:1;
+  flex-wrap: nowrap; overflow-x: auto;
+}
+.cycle-node {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 80px; flex: 1;
+}
+.cycle-box {
+  width: 72px; height: 52px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted2);
+  text-align: center; line-height: 1.3;
+}
+.cycle-box.active {
+  background: rgba(200,240,77,.07);
+  border-color: rgba(200,240,77,.35);
+  color: var(--accent);
+}
+.cycle-icon { font-size: 16px; margin-bottom: 2px; }
+.cycle-arrow {
+  flex: 0 0 24px;
+  height: 1px; background: rgba(200,240,77,.35);
+  position: relative;
+}
+.cycle-arrow::after {
+  content: '▶';
+  position: absolute; right: -6px; top: -7px;
+  font-size: 8px; color: rgba(200,240,77,.5);
+}
+.cycle-label { font-family:'DM Mono',monospace; font-size:7px; color:var(--muted); margin-top:6px; letter-spacing:.1em; text-transform:uppercase; }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA 2: BEFORE / AFTER
+───────────────────────────────────────── */
+.ba-wrap {
+  display: grid; grid-template-columns: 1fr 40px 1fr;
+  gap: 0; margin-top: 44px; align-items: center;
+}
+.ba-side { padding: 28px 24px; background: var(--card); border: 1px solid var(--border2); }
+.ba-side.after { background: rgba(200,240,77,.04); border-color: rgba(200,240,77,.2); }
+.ba-vs {
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900;
+  color: var(--border2);
+  background: var(--bg); height: 100%;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.ba-tag { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:12px; }
+.ba-chain { display:flex; flex-direction:column; gap:6px; }
+.ba-step {
+  display:flex; align-items:center; gap:10px;
+  font-size: 13px; color: var(--muted2); padding: 8px 12px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.ba-step.highlight { background: rgba(200,240,77,.06); border-color: rgba(200,240,77,.2); color: var(--text); }
+.ba-step-arrow { font-size:9px; color:var(--muted); padding:4px 0; padding-left:12px; }
+.ba-foot { margin-top:12px; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA 3: ARQUITECTURA GENERAL
+───────────────────────────────────────── */
+.arch-wrap {
+  margin-top: 44px;
+  display: grid; grid-template-columns: 1fr 80px 180px 80px 1fr;
+  align-items: center; gap: 0;
+  background: var(--surface); border: 1px solid var(--border2);
+  padding: 36px 28px;
+}
+.arch-col { display: flex; flex-direction: column; gap: 8px; }
+.arch-box {
+  padding: 10px 14px;
+  background: var(--card); border: 1px solid var(--border2);
+  font-family: 'DM Mono',monospace; font-size: 9px; color: var(--muted2);
+  letter-spacing: .08em; text-align: center;
+}
+.arch-box.core {
+  background: rgba(200,240,77,.07); border-color: rgba(200,240,77,.3);
+  color: var(--accent); padding: 28px 16px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+}
+.arch-box.out { background: rgba(77,240,200,.04); border-color: rgba(77,240,200,.2); color: var(--accent3); }
+.arch-connector {
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:4px;
+}
+.arch-line {
+  width:100%; height:1px; background:linear-gradient(to right, var(--border2), rgba(200,240,77,.3));
+  position:relative;
+}
+.arch-line.out { background:linear-gradient(to right, rgba(77,240,200,.3), var(--border2)); }
+.arch-line::after {
+  content:'▶'; position:absolute; right:-2px; top:-7px;
+  font-size:8px; color:rgba(200,240,77,.5);
+}
+.arch-line.out::after { color:rgba(77,240,200,.5); }
+.arch-connector .lbl { font-size:7px; }
+
+/* ─────────────────────────────────────────
+   ROLE CARDS
+───────────────────────────────────────── */
+.role-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); }
+.role-card { background:var(--bg); padding:44px 30px; position:relative; overflow:hidden; transition:background .3s; }
+.role-card:hover { background:var(--card); }
+.role-card::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; }
+.role-card:nth-child(1)::before { background:var(--accent); }
+.role-card:nth-child(2)::before { background:var(--accent2); }
+.role-card:nth-child(3)::before { background:var(--accent3); }
+.role-card:nth-child(4)::before { background:var(--accent4); }
+.role-icon { font-size:26px; margin-bottom:16px; display:block; }
+.role-card h3 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; margin-bottom:10px; }
+.role-card p { font-size:13px; color:var(--muted2); line-height:1.8; }
+
+/* ─────────────────────────────────────────
+   PROJECTS
+───────────────────────────────────────── */
+.proj-row {
+  display:grid; grid-template-columns:56px 1fr 360px;
+  gap:1px; background:var(--border);
+  border-bottom:1px solid var(--border);
+}
+.proj-n { background:var(--bg); padding:40px 16px; font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); writing-mode:vertical-rl; display:flex; align-items:center; }
+.proj-m { background:var(--bg); padding:44px 48px; transition:background .25s; }
+.proj-m:hover { background:var(--surface); }
+.proj-m h3 { font-family:'Playfair Display',serif; font-size:27px; font-weight:700; margin-bottom:8px; }
+.proj-hook { font-size:14px; color:var(--muted2); line-height:1.8; margin-bottom:18px; max-width:440px; }
+.proj-badge {
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  border:1px solid; padding:5px 13px;
+}
+.proj-d { background:var(--surface); padding:36px 30px; }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: FLOW HORIZONTAL (proj diagrams)
+───────────────────────────────────────── */
+.flow-h {
+  display:flex; align-items:stretch; gap:0;
+  background:var(--card); border:1px solid var(--border2);
+  margin-top:22px;
+}
+.flow-h-step {
+  flex:1; padding:14px 12px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:4px;
+  border-right:1px solid var(--border2); position:relative;
+}
+.flow-h-step:last-child { border-right:none; }
+.flow-h-step.last {
+  background:rgba(200,240,77,.05);
+}
+.flow-h-step .step-icon { font-size:16px; }
+.flow-h-step .step-label { font-family:'DM Mono',monospace; font-size:8px; color:var(--muted2); letter-spacing:.08em; text-transform:uppercase; line-height:1.4; }
+.flow-h-step.last .step-label { color:var(--accent); }
+.flow-h-arrow {
+  flex:0 0 16px; display:flex; align-items:center; justify-content:center;
+  font-size:8px; color:rgba(200,240,77,.4);
+}
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: RADAR / RADIAL
+───────────────────────────────────────── */
+.radial-wrap { position:relative; width:220px; height:220px; margin:0 auto; }
+.radial-center {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:70px; height:70px; border-radius:50%;
+  background:rgba(200,240,77,.07); border:1px solid rgba(200,240,77,.3);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-family:'DM Mono',monospace; font-size:8px; color:var(--accent); text-align:center; letter-spacing:.08em; line-height:1.4; z-index:2;
+}
+.radial-node {
+  position:absolute;
+  width:78px; height:34px; background:var(--card); border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'DM Mono',monospace; font-size:8px; color:var(--muted2); text-align:center;
+  letter-spacing:.06em; z-index:2;
+}
+.radial-line {
+  position:absolute; background:var(--border2); z-index:1;
+  transform-origin: left center;
+}
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: SCORING SEMÁFORO
+───────────────────────────────────────── */
+.scoring-wrap {
+  background:var(--card); border:1px solid var(--border2);
+  padding:20px; margin-top:20px;
+}
+.scoring-title { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:.15em; text-transform:uppercase; margin-bottom:14px; }
+.scoring-row {
+  display:flex; align-items:center; gap:10px; margin-bottom:8px;
+}
+.scoring-bar-bg { flex:1; height:24px; background:var(--surface); border:1px solid var(--border2); position:relative; overflow:hidden; }
+.scoring-bar-fill { height:100%; position:absolute; left:0; top:0; display:flex; align-items:center; padding-left:8px; }
+.scoring-bar-fill span { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.08em; }
+.scoring-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.scoring-tag { font-family:'DM Mono',monospace; font-size:8px; color:var(--muted); min-width:70px; text-align:right; }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: BARRA COMPARATIVA
+───────────────────────────────────────── */
+.bar-compare { margin-top:2px; background:var(--surface); border:1px solid var(--border2); padding:40px; }
+.bc-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.bc-row:last-child { margin-bottom:0; }
+.bc-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); width:130px; text-align:right; flex-shrink:0; }
+.bc-bars { flex:1; display:flex; flex-direction:column; gap:4px; }
+.bc-bar-wrap { display:flex; align-items:center; gap:8px; }
+.bc-bar { height:20px; display:flex; align-items:center; padding:0 10px; position:relative; }
+.bc-bar span { font-family:'DM Mono',monospace; font-size:8px; white-space:nowrap; }
+.bc-bar.before { background:var(--card); border:1px solid var(--border2); min-width:200px; }
+.bc-bar.before span { color:var(--muted); }
+.bc-bar.after  { border:1px solid; }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: KIOSKO ARQUITECTURA
+───────────────────────────────────────── */
+.kiosk-arch {
+  display:grid; grid-template-columns:1fr 50px 1fr 50px 1fr;
+  align-items:center; gap:0;
+  background:var(--bg); border:1px solid var(--border2); padding:24px 16px; margin-top:20px;
+}
+.kiosk-col { display:flex; flex-direction:column; gap:6px; }
+.kiosk-layer {
+  background:var(--card); border:1px solid var(--border2);
+  padding:10px 14px; text-align:center;
+  font-family:'DM Mono',monospace; font-size:9px; color:var(--muted2); line-height:1.4;
+}
+.kiosk-layer.highlight { background:rgba(240,77,122,.05); border-color:rgba(240,77,122,.25); color:var(--accent4); }
+.kiosk-layer.cloud { background:rgba(77,240,200,.04); border-color:rgba(77,240,200,.2); color:var(--accent3); }
+.kiosk-conn {
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+}
+.kiosk-conn-line { width:100%; height:1px; background:var(--border2); }
+.kiosk-conn-label { font-family:'DM Mono',monospace; font-size:7px; color:var(--muted); text-align:center; }
+.kiosk-conn-arrow { font-size:9px; color:var(--muted); }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: PIPELINE TUBERÍA
+───────────────────────────────────────── */
+.pipe-wrap {
+  display:flex; align-items:stretch;
+  background:var(--card); border:1px solid var(--border2);
+  margin-top:22px; overflow:hidden;
+}
+.pipe-step {
+  flex:1; padding:18px 14px; text-align:center;
+  border-right:1px solid var(--border2);
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.pipe-step:last-child { border-right:none; background:rgba(240,200,77,.05); }
+.pipe-icon { font-size:18px; }
+.pipe-label { font-family:'DM Mono',monospace; font-size:8px; color:var(--muted2); letter-spacing:.08em; text-transform:uppercase; line-height:1.4; text-align:center; }
+.pipe-step:last-child .pipe-label { color:var(--accent2); }
+.pipe-arrow { flex:0 0 14px; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(240,200,77,.4); border-right:1px solid var(--border2); }
+
+/* ─────────────────────────────────────────
+   DIAGRAMA: PROCESO TIMELINE HORIZONTAL
+───────────────────────────────────────── */
+.proc-h {
+  display:flex; position:relative; margin-bottom:56px; overflow-x:auto;
+}
+.proc-h::before {
+  content:''; position:absolute; top:20px; left:20px; right:20px; height:1px;
+  background:linear-gradient(to right, var(--accent), var(--accent2), var(--accent3), rgba(255,255,255,.05));
+}
+.proc-node { flex:1; min-width:120px; display:flex; flex-direction:column; align-items:center; gap:14px; padding:0 8px; }
+.proc-dot {
+  width:14px; height:14px; border-radius:50%;
+  border:2px solid var(--accent); background:var(--bg); z-index:1; flex-shrink:0;
+}
+.proc-dot:nth-child(1) { border-color:var(--accent); }
+.proc-body { text-align:center; }
+.proc-step { font-family:'DM Mono',monospace; font-size:8px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase; margin-bottom:4px; }
+.proc-name { font-family:'Playfair Display',serif; font-size:12px; font-weight:700; margin-bottom:4px; line-height:1.2; }
+.proc-desc { font-size:11px; color:var(--muted2); line-height:1.6; }
+
+/* ─────────────────────────────────────────
+   TIMELINE (proceso vertical)
+───────────────────────────────────────── */
+.tl { position:relative; padding-left:50px; }
+.tl::before { content:''; position:absolute; left:14px; top:8px; bottom:8px; width:1px; background:linear-gradient(to bottom,var(--accent),var(--accent2),var(--accent3),rgba(255,255,255,.04)); }
+.tl-item { position:relative; padding:34px 0; border-bottom:1px solid var(--border); }
+.tl-item:last-child { border-bottom:none; }
+.tl-dot { position:absolute; left:-44px; top:38px; width:14px; height:14px; border-radius:50%; border:2px solid var(--accent); background:var(--bg); }
+.tl-s { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.tl-t { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:6px; }
+.tl-d { font-size:14px; color:var(--muted2); line-height:1.8; max-width:500px; }
+
+/* ─────────────────────────────────────────
+   IMPACT
+───────────────────────────────────────── */
+.impact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); }
+.imp-card { background:var(--bg); padding:48px 32px; position:relative; }
+.imp-card::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; }
+.imp-card:nth-child(1)::before { background:var(--accent); }
+.imp-card:nth-child(2)::before { background:var(--accent2); }
+.imp-card:nth-child(3)::before { background:var(--accent4); }
+.imp-card:nth-child(4)::before { background:var(--accent3); }
+.imp-n { font-family:'Playfair Display',serif; font-size:clamp(38px,4vw,58px); font-weight:900; line-height:1; margin-bottom:10px; }
+.imp-card:nth-child(1) .imp-n { color:var(--accent); }
+.imp-card:nth-child(2) .imp-n { color:var(--accent2); }
+.imp-card:nth-child(3) .imp-n { color:var(--accent4); }
+.imp-card:nth-child(4) .imp-n { color:var(--accent3); }
+.imp-l { font-size:13px; color:var(--muted2); line-height:1.7; }
+
+/* ─────────────────────────────────────────
+   EXTRAS
+───────────────────────────────────────── */
+.extras { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
+.extra { background:var(--surface); padding:44px; }
+.extra-icon { font-size:30px; margin-bottom:14px; display:block; }
+.extra h3 { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:10px; }
+.extra p { font-size:13px; color:var(--muted2); line-height:1.8; }
+
+/* ─── MISC ─── */
+.pill { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:4px 11px; border:1px solid var(--border); color:var(--muted); background:var(--surface); }
+.quote-box { border-left:2px solid; padding:16px 20px; font-size:13px; color:var(--muted2); font-style:italic; line-height:1.7; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.hero-l > * { animation: fadeUp .8s ease backwards; }
+.hero-l > *:nth-child(1){animation-delay:.05s}
+.hero-l > *:nth-child(2){animation-delay:.2s}
+.hero-l > *:nth-child(3){animation-delay:.35s}
+.hero-r > * { animation: fadeUp .8s ease backwards; }
+.hero-r > *:nth-child(1){animation-delay:.4s}
+.hero-r > *:nth-child(2){animation-delay:.55s}
+.hero-r > *:nth-child(3){animation-delay:.7s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-l{border-right:none; border-bottom:1px solid var(--border); padding:60px 28px}
+  .hero-r{padding:50px 28px}
+  .hero-bar,.stats-row{padding:20px 28px}
+  .band{padding:60px 28px}
+  .sec{padding:60px 28px}
+  .prob-grid{grid-template-columns:1fr}
+  .arch-wrap{grid-template-columns:1fr; gap:16px; padding:24px}
+  .role-grid{grid-template-columns:1fr 1fr}
+  .proj-row{grid-template-columns:1fr}
+  .proj-n{display:none}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  .extras{grid-template-columns:1fr}
+  .ba-wrap{grid-template-columns:1fr;gap:0}
+  .ba-vs{display:none}
+  .kiosk-outer{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="hero-bar">
+    <span class="lbl">Uriel Ríos Cervantes · CDMX</span>
+    <span class="lbl">Portafolio · Sistemas IA en Producción · 2024–2025</span>
+  </div>
+
+  <div class="hero-grid">
+    <div class="hero-l">
+      <div>
+        <p class="lbl lbl-g" style="margin-bottom:18px;">— Sistemas Autónomos Operativos</p>
+        <h1 class="hero-title">Cuando la<br><em>IA trabaja,</em><br>tú decides.</h1>
+      </div>
+      <p style="font-size:15px;color:var(--muted2);max-width:380px;line-height:1.85;">
+        No son experimentos ni demos en PowerPoint. Son arquitecturas digitales que hoy mismo ejecutan diagnósticos, generan reportes y toman decisiones por empresas reales.
+      </p>
+    </div>
+
+    <div class="hero-r">
+      <p class="tagline">
+        "Las empresas son lentas porque dependen de personas para tareas que no requieren personas."
+      </p>
+
+      <!-- DIAGRAMA 1: Ciclo de Autonomía -->
+      <div>
+        <p class="lbl" style="margin-bottom:12px;">El ciclo de autonomía</p>
+        <div class="cycle-diagram">
+          <div class="cycle-node">
+            <div class="cycle-box">
+              <span class="cycle-icon">📡</span>
+              <span>SEÑAL</span>
+              <span style="font-size:7px;color:var(--muted);">entrada</span>
+            </div>
+          </div>
+          <div class="cycle-arrow"></div>
+          <div class="cycle-node">
+            <div class="cycle-box">
+              <span class="cycle-icon">🧠</span>
+              <span>ANÁLISIS</span>
+              <span style="font-size:7px;color:var(--muted);">IA</span>
+            </div>
+          </div>
+          <div class="cycle-arrow"></div>
+          <div class="cycle-node">
+            <div class="cycle-box">
+              <span class="cycle-icon">⚖️</span>
+              <span>DECISIÓN</span>
+              <span style="font-size:7px;color:var(--muted);">motor</span>
+            </div>
+          </div>
+          <div class="cycle-arrow"></div>
+          <div class="cycle-node">
+            <div class="cycle-box active">
+              <span class="cycle-icon">⚡</span>
+              <span>ACCIÓN</span>
+              <span style="font-size:7px;">autónoma</span>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'DM Mono',monospace;letter-spacing:.08em;">↺ retroalimentación continua · sin intervención humana</p>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1;">
+        <span class="pill">Retail</span>
+        <span class="pill">Operaciones</span>
+        <span class="pill">Inteligencia Comercial</span>
+        <span class="pill">Reclutamiento</span>
+        <span class="pill">Cumplimiento</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><strong style="color:var(--accent);">6</strong><span>sistemas activos</span></div>
+    <div class="stat"><strong style="color:var(--accent2);">24/7</strong><span>operación autónoma</span></div>
+    <div class="stat"><strong style="color:var(--accent3);">×60</strong><span>más rápido</span></div>
+    <div class="stat"><strong style="color:var(--accent4);">0</strong><span>errores manuales</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PROBLEMA ═══════════════ -->
+<div class="band">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="lbl lbl-g" style="margin-bottom:14px;">— El diagnóstico</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,42px);font-weight:700;line-height:1.15;max-width:700px;margin-bottom:40px;">
+      Las empresas son lentas porque dependen de personas<br>para tareas que no requieren personas.
+    </h2>
+
+    <div class="prob-grid">
+      <div class="prob-card" data-n="01">
+        <h3>⏳ Cuello de botella humano</h3>
+        <p>Un técnico en campo espera minutos a que alguien en oficina revise manualmente cuatro sistemas para dar una respuesta que debería tomar segundos.</p>
+      </div>
+      <div class="prob-card" data-n="02">
+        <h3>📋 Trabajo de oficina desperdiciado</h3>
+        <p>Alguien descarga datos, los pega en Excel, los formatea y los envía por correo. Todos los días. Horas de trabajo humano en una tarea completamente predecible.</p>
+      </div>
+      <div class="prob-card" data-n="03">
+        <h3>🌀 Decisiones sin datos claros</h3>
+        <p>La información existe pero está dispersa en silos. Se toman decisiones por intuición porque nadie tiene tiempo de unificar todas las señales disponibles.</p>
+      </div>
+    </div>
+
+    <!-- DIAGRAMA 2: Antes vs Después -->
+    <div style="margin-top:44px;">
+      <p class="lbl" style="margin-bottom:16px;">Antes vs. Después</p>
+      <div class="ba-wrap">
+        <div class="ba-side">
+          <p class="ba-tag" style="color:var(--muted);">Antes — proceso manual</p>
+          <div class="ba-chain">
+            <div class="ba-step">👷 Técnico tiene una duda</div>
+            <div class="ba-step-arrow">↓</div>
+            <div class="ba-step">📞 Llama al operador en oficina</div>
+            <div class="ba-step-arrow">↓</div>
+            <div class="ba-step">🖥️ Operador revisa 4 sistemas</div>
+            <div class="ba-step-arrow">↓</div>
+            <div class="ba-step">⏳ Espera disponibilidad</div>
+            <div class="ba-step-arrow">↓</div>
+            <div class="ba-step">💬 Respuesta ~15 minutos</div>
+          </div>
+          <p class="ba-foot" style="color:var(--muted);margin-top:12px;">Solo en horario laboral · propenso a errores</p>
+        </div>
+        <div class="ba-vs">vs</div>
+        <div class="ba-side after">
+          <p class="ba-tag lbl-g">Después — sistema autónomo</p>
+          <div class="ba-chain">
+            <div class="ba-step highlight">👷 Técnico envía mensaje WhatsApp</div>
+            <div class="ba-step-arrow" style="color:var(--accent);opacity:.6;">↓</div>
+            <div class="ba-step highlight">🤖 IA interpreta la solicitud</div>
+            <div class="ba-step-arrow" style="color:var(--accent);opacity:.6;">↓</div>
+            <div class="ba-step highlight">⚡ Consulta 4 plataformas simultáneamente</div>
+            <div class="ba-step-arrow" style="color:var(--accent);opacity:.6;">↓</div>
+            <div class="ba-step highlight">✅ Respuesta en segundos</div>
+          </div>
+          <p class="ba-foot lbl-g" style="margin-top:12px;">24/7 · sin errores · sin espera</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ROL DE LA IA ═══════════════ -->
+<div class="sec">
+  <div class="sec-head">
+    <span class="sec-n">02</span>
+    <h2 class="sec-t">El papel de la<br>Inteligencia Artificial</h2>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <span class="role-icon">🧠</span>
+      <h3>Interpreta</h3>
+      <p>Entiende lo que el usuario necesita en sus propias palabras. Un mensaje de WhatsApp es suficiente.</p>
+    </div>
+    <div class="role-card">
+      <span class="role-icon">⚡</span>
+      <h3>Analiza</h3>
+      <p>Procesa simultáneamente múltiples fuentes: bases de datos, sensores, inventarios. Lo que un humano tarda horas, lo hace en segundos.</p>
+    </div>
+    <div class="role-card">
+      <span class="role-icon">🎯</span>
+      <h3>Decide</h3>
+      <p>No solo reúne datos, los califica. Detecta qué señales importan y genera recomendaciones basadas en lógica estructurada.</p>
+    </div>
+    <div class="role-card">
+      <span class="role-icon">🔁</span>
+      <h3>Automatiza</h3>
+      <p>Ejecuta diagnósticos, reportes y validaciones de forma continua. Sin horario. Sin supervisión.</p>
+    </div>
+  </div>
+
+  <!-- DIAGRAMA 3: Arquitectura general -->
+  <div style="margin-top:44px;">
+    <p class="lbl" style="margin-bottom:16px;">Arquitectura: cómo fluye la información</p>
+    <div class="arch-wrap">
+      <!-- Fuentes -->
+      <div class="arch-col">
+        <p class="lbl" style="text-align:center;margin-bottom:8px;">Fuentes</p>
+        <div class="arch-box">📱 WhatsApp / App</div>
+        <div class="arch-box">🗄️ Bases de datos</div>
+        <div class="arch-box">📷 Sensores / IoT</div>
+        <div class="arch-box">📊 Reportes / APIs</div>
+      </div>
+      <!-- Conector entrada -->
+      <div class="arch-connector">
+        <div class="arch-line"></div>
+        <span class="lbl" style="font-size:7px;writing-mode:vertical-rl;">ingreso</span>
+      </div>
+      <!-- Motor IA -->
+      <div>
+        <div class="arch-box core">
+          <span style="font-size:24px;">🤖</span>
+          <span style="font-size:10px;letter-spacing:.12em;">MOTOR IA</span>
+          <span style="font-size:9px;color:var(--muted);font-family:'Playfair Display',serif;font-style:italic;">orquesta · decide</span>
+        </div>
+      </div>
+      <!-- Conector salida -->
+      <div class="arch-connector">
+        <div class="arch-line out"></div>
+        <span class="lbl" style="font-size:7px;writing-mode:vertical-rl;">resultado</span>
+      </div>
+      <!-- Salidas -->
+      <div class="arch-col">
+        <p class="lbl lbl-t" style="text-align:center;margin-bottom:8px;">Resultado</p>
+        <div class="arch-box out">✅ Respuesta instantánea</div>
+        <div class="arch-box out">📄 Reporte automático</div>
+        <div class="arch-box out">🔔 Alerta priorizada</div>
+        <div class="arch-box" style="border-style:dashed;color:var(--muted);">👤 Humano (solo si es necesario)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PROYECTOS ═══════════════ -->
+<div style="border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 64px 44px;">
+    <p class="lbl lbl-g" style="margin-bottom:12px;">— Casos reales en producción</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,46px);font-weight:700;line-height:1;">Sistemas que hoy mismo<br>están funcionando.</h2>
+  </div>
+
+  <!-- P1: WhatsApp -->
+  <div class="proj-row">
+    <div class="proj-n">01</div>
+    <div class="proj-m">
+      <p class="lbl lbl-g" style="margin-bottom:10px;">Operación técnica · WhatsApp</p>
+      <h3>Agente Operativo Conversacional</h3>
+      <p class="proj-hook">Un técnico en campo manda un mensaje. En segundos recibe el diagnóstico completo del equipo: conectividad, video, sensores y alertas. Sin llamadas, sin esperas, sin intermediarios.</p>
+      <span class="proj-badge" style="color:var(--accent);border-color:rgba(200,240,77,.3);">⏱ De minutos a segundos</span>
+
+      <!-- DIAGRAMA: flujo horizontal P1 -->
+      <div class="flow-h" style="margin-top:24px;">
+        <div class="flow-h-step">
+          <span class="step-icon">💬</span>
+          <span class="step-label">Mensaje<br>WhatsApp</span>
+        </div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step">
+          <span class="step-icon">🧠</span>
+          <span class="step-label">IA<br>interpreta</span>
+        </div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step">
+          <span class="step-icon">🔗</span>
+          <span class="step-label">4 plataformas<br>simultáneas</span>
+        </div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step last">
+          <span class="step-icon">✅</span>
+          <span class="step-label">Respuesta<br>al instante</span>
+        </div>
+      </div>
+    </div>
+    <div class="proj-d">
+      <p class="lbl" style="margin-bottom:14px;">Fuentes consultadas</p>
+      <!-- DIAGRAMA RADIAL -->
+      <div style="position:relative;width:200px;height:200px;margin:0 auto;">
+        <!-- center -->
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(200,240,77,.07);border:1px solid rgba(200,240,77,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:7px;color:var(--accent);text-align:center;letter-spacing:.08em;line-height:1.4;z-index:2;">
+          🤖<br>MOTOR<br>IA
+        </div>
+        <!-- top node -->
+        <div style="position:absolute;top:4px;left:50%;transform:translateX(-50%);width:80px;height:28px;background:var(--card);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);z-index:2;">Redes IP</div>
+        <!-- right node -->
+        <div style="position:absolute;top:50%;right:0;transform:translateY(-50%);width:72px;height:28px;background:var(--card);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);z-index:2;">Cámaras</div>
+        <!-- bottom node -->
+        <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:80px;height:28px;background:var(--card);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);z-index:2;">Telemetría</div>
+        <!-- left node -->
+        <div style="position:absolute;top:50%;left:0;transform:translateY(-50%);width:72px;height:28px;background:var(--card);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);z-index:2;">Base datos</div>
+        <!-- lines using css borders -->
+        <div style="position:absolute;top:32px;left:50%;width:1px;height:37px;background:var(--border2);z-index:1;"></div>
+        <div style="position:absolute;top:50%;right:72px;height:1px;width:36px;background:var(--border2);z-index:1;transform:translateY(-50%);"></div>
+        <div style="position:absolute;bottom:32px;left:50%;width:1px;height:37px;background:var(--border2);z-index:1;"></div>
+        <div style="position:absolute;top:50%;left:72px;height:1px;width:36px;background:var(--border2);z-index:1;transform:translateY(-50%);"></div>
+      </div>
+      <p class="quote-box" style="border-color:rgba(200,240,77,.3);margin-top:16px;">"Eliminó la necesidad del operador humano. Disponible 24/7."</p>
+    </div>
+  </div>
+
+  <!-- P2: Reporteo -->
+  <div class="proj-row">
+    <div class="proj-n">02</div>
+    <div class="proj-m">
+      <p class="lbl lbl-y" style="margin-bottom:10px;">Inteligencia de negocio · Reporteo</p>
+      <h3>Pipeline de Reporteo Ejecutivo</h3>
+      <p class="proj-hook">El reporte de Excel que alguien armaba cada mañana ahora llega solo, a la misma hora, sin errores, con múltiples pestañas, listo para el comité directivo.</p>
+      <span class="proj-badge" style="color:var(--accent2);border-color:rgba(240,200,77,.3);">🕐 Horas de trabajo → cero</span>
+
+      <!-- DIAGRAMA: tubería P2 -->
+      <div style="margin-top:24px;">
+        <p class="lbl" style="margin-bottom:10px;">La tubería de datos</p>
+        <div class="pipe-wrap">
+          <div class="pipe-step">
+            <span class="pipe-icon">🗄️</span>
+            <span class="pipe-label">Extracción<br>automática</span>
+          </div>
+          <div class="pipe-arrow">▶</div>
+          <div class="pipe-step">
+            <span class="pipe-icon">⚙️</span>
+            <span class="pipe-label">Procesamiento<br>inteligente</span>
+          </div>
+          <div class="pipe-arrow">▶</div>
+          <div class="pipe-step">
+            <span class="pipe-icon">📊</span>
+            <span class="pipe-label">Generación<br>Excel multi-tab</span>
+          </div>
+          <div class="pipe-arrow">▶</div>
+          <div class="pipe-step">
+            <span class="pipe-icon">📧</span>
+            <span class="pipe-label">Envío directo<br>ejecutivos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="proj-d">
+      <p class="lbl" style="margin-bottom:14px;">Impacto real</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border2);">
+          <span style="font-size:20px;">📅</span>
+          <div><p style="font-size:12px;color:var(--text);">Todos los días, sin falta</p><p style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">misma hora · mismo formato</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border2);">
+          <span style="font-size:20px;">❌</span>
+          <div><p style="font-size:12px;color:var(--text);">Cero errores de dedo</p><p style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">datos limpios · validados</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border2);">
+          <span style="font-size:20px;">🏆</span>
+          <div><p style="font-size:12px;color:var(--text);">Talento hacia estrategia</p><p style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">lo repetitivo → automatizado</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3: Multi-señal -->
+  <div class="proj-row">
+    <div class="proj-n">03</div>
+    <div class="proj-m">
+      <p class="lbl lbl-t" style="margin-bottom:10px;">Inteligencia comercial · Señales de mercado</p>
+      <h3>Motor de Decisión Multi-Señal</h3>
+      <p class="proj-hook">Ventas, inventarios, precios de competencia, promociones activas: todo llega fragmentado. Este sistema lo unifica, lo puntúa y dice exactamente qué requiere acción urgente.</p>
+      <span class="proj-badge" style="color:var(--accent3);border-color:rgba(77,240,200,.3);">📊 De corazonadas a datos</span>
+
+      <!-- DIAGRAMA: flujo scoring P3 -->
+      <div class="flow-h" style="margin-top:24px;">
+        <div class="flow-h-step">
+          <span class="step-icon">📥</span>
+          <span class="step-label">Señales<br>internas/externas</span>
+        </div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step">
+          <span class="step-icon">🔄</span>
+          <span class="step-label">Normalización<br>de datos</span>
+        </div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step">
+          <span class="step-icon">⚖️</span>
+          <span class="step-label">Motor de<br>scoring</span>
+        </div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step last" style="background:rgba(77,240,200,.05);">
+          <span class="step-icon">🔔</span>
+          <span class="step-label" style="color:var(--accent3);">Alertas y<br>acciones</span>
+        </div>
+      </div>
+    </div>
+    <div class="proj-d">
+      <!-- DIAGRAMA: semáforo scoring -->
+      <p class="lbl" style="margin-bottom:12px;">Clasificación de señales</p>
+      <div class="scoring-wrap">
+        <div class="scoring-title">Motor de scoring — prioridad</div>
+        <div class="scoring-row">
+          <div class="scoring-dot" style="background:var(--accent3);"></div>
+          <div class="scoring-bar-bg">
+            <div class="scoring-bar-fill" style="background:rgba(77,240,200,.15);width:75%;">
+              <span style="color:var(--accent3);">🟢 Oportunidad de venta</span>
+            </div>
+          </div>
+          <span class="scoring-tag">alta demanda</span>
+        </div>
+        <div class="scoring-row">
+          <div class="scoring-dot" style="background:var(--accent2);"></div>
+          <div class="scoring-bar-bg">
+            <div class="scoring-bar-fill" style="background:rgba(240,200,77,.1);width:50%;">
+              <span style="color:var(--accent2);">🟡 Monitorear</span>
+            </div>
+          </div>
+          <span class="scoring-tag">inventario bajo</span>
+        </div>
+        <div class="scoring-row">
+          <div class="scoring-dot" style="background:var(--accent4);"></div>
+          <div class="scoring-bar-bg">
+            <div class="scoring-bar-fill" style="background:rgba(240,77,122,.12);width:30%;">
+              <span style="color:var(--accent4);">🔴 Alerta urgente</span>
+            </div>
+          </div>
+          <span class="scoring-tag">precio fuera</span>
+        </div>
+      </div>
+      <p class="quote-box" style="border-color:rgba(77,240,200,.3);margin-top:14px;">"Las decisiones dejaron de basarse en intuición."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ KIOSCO MUNDIAL ═══════════════ -->
+<div style="border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 64px;">
+    <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(240,77,122,.07);border:1px solid rgba(240,77,122,.25);padding:8px 16px;margin-bottom:20px;">
+      <span>⚽</span>
+      <span class="lbl lbl-p">Caso especial · FIFA World Cup 2026 · Retail Phygital</span>
+    </div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,44px);font-weight:900;line-height:1.1;margin-bottom:20px;">
+      Sistema Interactivo<br>para Tiendas
+    </h2>
+    <p style="font-size:14px;color:var(--muted2);line-height:1.85;max-width:580px;margin-bottom:36px;">
+      Un kiosco en tienda que funciona aunque no haya internet, no se cuelgue, registra cada segundo de interacción del cliente y sincroniza todo en la nube cuando puede. Construido para la experiencia de marca del Mundial 2026.
+    </p>
+
+    <!-- DIAGRAMA: arquitectura kiosco -->
+    <p class="lbl" style="margin-bottom:14px;">Arquitectura phygital</p>
+    <div class="kiosk-arch">
+      <!-- Tienda física -->
+      <div class="kiosk-col">
+        <p class="lbl lbl-p" style="text-align:center;margin-bottom:6px;">🏪 Tienda física</p>
+        <div class="kiosk-layer">💻 Hardware local</div>
+        <div class="kiosk-layer highlight">🤖 IA local (offline)</div>
+        <div class="kiosk-layer">🖥️ Pantalla kiosco</div>
+        <div class="kiosk-layer">📝 Registro de datos</div>
+      </div>
+      <!-- conector 1 -->
+      <div class="kiosk-conn">
+        <div class="kiosk-conn-line"></div>
+        <div class="kiosk-conn-arrow">⇄</div>
+        <div class="kiosk-conn-label" style="font-family:'DM Mono',monospace;font-size:7px;color:var(--muted);text-align:center;">sync<br>cuando<br>hay red</div>
+        <div class="kiosk-conn-line" style="border-top:1px dashed var(--border2);background:transparent;height:0;"></div>
+      </div>
+      <!-- Procesamiento -->
+      <div class="kiosk-col">
+        <p class="lbl" style="text-align:center;margin-bottom:6px;">⚙️ Procesamiento</p>
+        <div class="kiosk-layer" style="flex:1;padding:24px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;">
+          <span style="font-size:24px;">🧠</span>
+          <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted2);">MOTOR IA</span>
+          <span style="font-size:10px;color:var(--muted);font-family:'Playfair Display',serif;font-style:italic;">lógica local<br>sin depender<br>de internet</span>
+        </div>
+      </div>
+      <!-- conector 2 -->
+      <div class="kiosk-conn">
+        <div class="kiosk-conn-line"></div>
+        <div class="kiosk-conn-arrow">→</div>
+        <div class="kiosk-conn-label" style="font-family:'DM Mono',monospace;font-size:7px;color:var(--muted);text-align:center;">sube<br>a nube</div>
+        <div class="kiosk-conn-line"></div>
+      </div>
+      <!-- Nube -->
+      <div class="kiosk-col">
+        <p class="lbl lbl-t" style="text-align:center;margin-bottom:6px;">☁️ Nube</p>
+        <div class="kiosk-layer cloud">📊 Dashboard central</div>
+        <div class="kiosk-layer cloud">📈 Métricas en vivo</div>
+        <div class="kiosk-layer cloud">🔔 Alertas automáticas</div>
+        <div class="kiosk-layer cloud">⏱️ Tiempo de interacción</div>
+      </div>
+    </div>
+
+    <!-- features -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:2px;">
+      <div style="background:var(--surface);padding:24px 20px;">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">⚽ Funciona sin internet</p>
+        <p style="font-size:12px;color:var(--muted2);">La IA opera localmente. Si cae la red, el kiosco sigue y acumula datos para sincronizar después.</p>
+      </div>
+      <div style="background:var(--surface);padding:24px 20px;border-left:1px solid var(--border);">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">📊 Mide cada segundo</p>
+        <p style="font-size:12px;color:var(--muted2);">Registra cuánto tiempo interactúa el cliente con la marca. Un dato antes imposible de obtener.</p>
+      </div>
+      <div style="background:var(--surface);padding:24px 20px;border-left:1px solid var(--border);">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">🔔 Monitoreo autónomo</p>
+        <p style="font-size:12px;color:var(--muted2);">Si algo falla en el hardware, el sistema lo detecta y notifica automáticamente.</p>
+      </div>
+      <div style="background:var(--surface);padding:24px 20px;border-left:1px solid var(--border);">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">🌐 Phygital real</p>
+        <p style="font-size:12px;color:var(--muted2);">Hardware + software + IA como una sola pieza. Experiencia física conectada al ecosistema digital.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PROCESO ═══════════════ -->
+<div class="sec">
+  <div class="sec-head">
+    <span class="sec-n">05</span>
+    <h2 class="sec-t">Cómo se construye<br>un sistema.</h2>
+  </div>
+
+  <!-- DIAGRAMA: proceso horizontal -->
+  <div style="background:var(--surface);border:1px solid var(--border2);padding:32px 24px;margin-bottom:52px;overflow-x:auto;">
+    <p class="lbl" style="margin-bottom:20px;">Los 6 pasos de cada sistema</p>
+    <div style="display:flex;align-items:flex-start;min-width:600px;position:relative;">
+      <!-- horizontal line -->
+      <div style="position:absolute;top:20px;left:20px;right:20px;height:1px;background:linear-gradient(to right,var(--accent),var(--accent2),var(--accent3),rgba(255,255,255,.05));"></div>
+
+      <!-- each step -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 6px;text-align:center;">
+        <div style="width:14px;height:14px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);z-index:1;flex-shrink:0;"></div>
+        <div><p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">01</p><p style="font-family:'Playfair Display',serif;font-size:12px;font-weight:700;margin-bottom:3px;">Diagnóstico</p><p style="font-size:11px;color:var(--muted2);">Detectar el cuello de botella</p></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 6px;text-align:center;">
+        <div style="width:14px;height:14px;border-radius:50%;border:2px solid var(--accent2);background:var(--bg);z-index:1;flex-shrink:0;"></div>
+        <div><p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">02</p><p style="font-family:'Playfair Display',serif;font-size:12px;font-weight:700;margin-bottom:3px;">Modelado</p><p style="font-size:11px;color:var(--muted2);">Diseño lógico del sistema</p></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 6px;text-align:center;">
+        <div style="width:14px;height:14px;border-radius:50%;border:2px solid var(--accent3);background:var(--bg);z-index:1;flex-shrink:0;"></div>
+        <div><p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">03</p><p style="font-family:'Playfair Display',serif;font-size:12px;font-weight:700;margin-bottom:3px;">Integración</p><p style="font-size:11px;color:var(--muted2);">Conectar todas las fuentes</p></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 6px;text-align:center;">
+        <div style="width:14px;height:14px;border-radius:50%;border:2px solid var(--accent4);background:var(--bg);z-index:1;flex-shrink:0;"></div>
+        <div><p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">04</p><p style="font-family:'Playfair Display',serif;font-size:12px;font-weight:700;margin-bottom:3px;">Motor IA</p><p style="font-size:11px;color:var(--muted2);">Programar la inteligencia</p></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 6px;text-align:center;">
+        <div style="width:14px;height:14px;border-radius:50%;border:2px solid var(--muted2);background:var(--bg);z-index:1;flex-shrink:0;"></div>
+        <div><p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">05</p><p style="font-family:'Playfair Display',serif;font-size:12px;font-weight:700;margin-bottom:3px;">Producción</p><p style="font-size:11px;color:var(--muted2);">Entorno real · en vivo</p></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 6px;text-align:center;">
+        <div style="width:14px;height:14px;border-radius:50%;border:2px solid var(--accent);background:rgba(200,240,77,.15);z-index:1;flex-shrink:0;"></div>
+        <div><p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">06</p><p style="font-family:'Playfair Display',serif;font-size:12px;font-weight:700;margin-bottom:3px;color:var(--accent);">Autonomía</p><p style="font-size:11px;color:var(--muted2);">Opera solo, siempre</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot"></div><p class="tl-s">Paso 01</p><h3 class="tl-t">Se identifica el cuello de botella.</h3><p class="tl-d">¿Dónde espera la gente? ¿Dónde se cometen errores? ¿Qué tarea se repite todos los días sin agregar valor real? Ese es el punto de entrada.</p></div>
+    <div class="tl-item"><div class="tl-dot" style="border-color:var(--accent2);"></div><p class="tl-s" style="color:var(--accent2);">Paso 02</p><h3 class="tl-t">Se modela cómo debe responder el sistema.</h3><p class="tl-d">Se diseña el árbol de decisiones: qué pasa ante cada situación posible, qué información necesita, qué acción toma en cada caso.</p></div>
+    <div class="tl-item"><div class="tl-dot" style="border-color:var(--accent3);"></div><p class="tl-s" style="color:var(--accent3);">Paso 03</p><h3 class="tl-t">Se conectan todas las fuentes de datos.</h3><p class="tl-d">Bases de datos, cámaras, sensores, APIs. El sistema aprende de dónde viene la información y cómo acceder a ella en tiempo real.</p></div>
+    <div class="tl-item"><div class="tl-dot" style="border-color:var(--accent4);"></div><p class="tl-s" style="color:var(--accent4);">Paso 04</p><h3 class="tl-t">Se programa la inteligencia central.</h3><p class="tl-d">El núcleo que toma decisiones: procesa, pondera y genera respuestas autónomas.</p></div>
+    <div class="tl-item"><div class="tl-dot"></div><p class="tl-s">Paso 05</p><h3 class="tl-t">El sistema entra en operación real.</h3><p class="tl-d">Servidores, computadoras locales o apps móviles. Ya no es un prototipo. Ya está trabajando.</p></div>
+    <div class="tl-item"><div class="tl-dot" style="border-color:var(--accent);background:rgba(200,240,77,.12);"></div><p class="tl-s">Paso 06</p><h3 class="tl-t">El sistema opera solo. Tú te enfocas en lo que importa.</h3><p class="tl-d">Solo notifica a los humanos cuando algo requiere una decisión estratégica real.</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ IMPACTO ═══════════════ -->
+<div style="border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 64px 0;">
+    <div class="sec-head"><span class="sec-n">06</span><h2 class="sec-t">Lo que cambia<br>cuando la IA trabaja.</h2></div>
+  </div>
+  <div style="max-width:1200px;margin:0 auto;padding:0 64px 80px;">
+    <div class="impact-grid">
+      <div class="imp-card"><div class="imp-n">×60</div><p class="imp-l">Reducción en tiempos de respuesta. Minutos → segundos.</p></div>
+      <div class="imp-card"><div class="imp-n">24/7</div><p class="imp-l">Disponibilidad total. Sin horarios, sin esperas.</p></div>
+      <div class="imp-card"><div class="imp-n">0</div><p class="imp-l">Errores por intervención manual. Datos siempre limpios.</p></div>
+      <div class="imp-card"><div class="imp-n">100%</div><p class="imp-l">Del talento humano liberado para trabajo estratégico.</p></div>
+    </div>
+
+    <!-- DIAGRAMA: barras comparativas -->
+    <div class="bar-compare">
+      <p class="lbl" style="margin-bottom:20px;">Antes vs. Después — Tiempo de proceso</p>
+      <div class="bc-row">
+        <span class="bc-label">Diagnóstico técnico</span>
+        <div class="bc-bars">
+          <div class="bc-bar-wrap">
+            <div class="bc-bar before" style="width:80%;"><span>~15 minutos (manual)</span></div>
+          </div>
+          <div class="bc-bar-wrap">
+            <div class="bc-bar after" style="width:5%;background:rgba(200,240,77,.1);border-color:rgba(200,240,77,.3);min-width:90px;"><span style="color:var(--accent);">~5 segundos</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bc-row">
+        <span class="bc-label">Reporte ejecutivo</span>
+        <div class="bc-bars">
+          <div class="bc-bar-wrap">
+            <div class="bc-bar before" style="width:70%;"><span>~2 horas (manual)</span></div>
+          </div>
+          <div class="bc-bar-wrap">
+            <div class="bc-bar after" style="width:4%;background:rgba(240,200,77,.08);border-color:rgba(240,200,77,.3);min-width:90px;"><span style="color:var(--accent2);">~30 segundos</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bc-row">
+        <span class="bc-label">Análisis comercial</span>
+        <div class="bc-bars">
+          <div class="bc-bar-wrap">
+            <div class="bc-bar before" style="width:60%;"><span>~1 hora (manual)</span></div>
+          </div>
+          <div class="bc-bar-wrap">
+            <div class="bc-bar after" style="width:6%;background:rgba(77,240,200,.06);border-color:rgba(77,240,200,.3);min-width:90px;"><span style="color:var(--accent3);">~2 minutos</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ HERRAMIENTAS ADICIONALES ═══════════════ -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-n">07</span><h2 class="sec-t">Herramientas<br>adicionales.</h2></div>
+  <div class="extras">
+    <div class="extra">
+      <span class="extra-icon">🎯</span>
+      <p class="lbl lbl-y" style="margin-bottom:12px;">Recursos Humanos</p>
+      <h3>LinkedIn Job Judge</h3>
+      <p>Un motor que compara automáticamente un CV contra una vacante. Extrae habilidades clave, las pondera y entrega un puntaje de compatibilidad. Reclutamiento más rápido, sin prejuicios iniciales.</p>
+      <!-- mini flow -->
+      <div class="flow-h" style="margin-top:18px;">
+        <div class="flow-h-step"><span class="step-icon">📄</span><span class="step-label">CV +<br>Vacante</span></div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step"><span class="step-icon">⚖️</span><span class="step-label">IA<br>pondera</span></div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step last" style="background:rgba(240,200,77,.05);"><span class="step-icon">📊</span><span class="step-label" style="color:var(--accent2);">Score<br>de fit %</span></div>
+      </div>
+    </div>
+    <div class="extra">
+      <span class="extra-icon">🔍</span>
+      <p class="lbl lbl-p" style="margin-bottom:12px;">Cumplimiento y riesgo</p>
+      <h3>Detección de Fraude Documental</h3>
+      <p>Un sistema que lee fotografías y PDFs de documentos oficiales, valida que la estructura sea la correcta y clasifica si el documento es válido o sospechoso. Reducción de riesgo sin revisión humana.</p>
+      <!-- mini flow -->
+      <div class="flow-h" style="margin-top:18px;">
+        <div class="flow-h-step"><span class="step-icon">📷</span><span class="step-label">Foto /<br>PDF</span></div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step"><span class="step-icon">🔎</span><span class="step-label">IA<br>valida</span></div>
+        <div class="flow-h-arrow">▶</div>
+        <div class="flow-h-step last" style="background:rgba(240,77,122,.05);">
+          <span class="step-icon">✅</span>
+          <span class="step-label" style="color:var(--accent4);">Válido /<br>Fraude</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer style="padding:48px 64px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);flex-wrap:wrap;gap:16px;">
+  <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;">Uriel <em style="color:var(--accent);font-style:italic;">Ríos</em> Cervantes</div>
+  <p class="lbl">Sistemas Autónomos en Producción · 2025</p>
+  <div style="display:flex;gap:8px;">
+    <span class="pill">CDMX · México</span>
+    <span class="pill" style="color:var(--accent);border-color:rgba(200,240,77,.25);">6 sistemas activos</span>
+  </div>
+</footer>
+
+</body>
 </html>
